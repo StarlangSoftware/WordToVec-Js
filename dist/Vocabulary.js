@@ -27,14 +27,18 @@
                 word1.getName().localeCompare(word2.getName(), "tr") :
                 (comparator == WordComparator_1.WordComparator.TURKISH_IGNORE_CASE ? word1.getName().toLocaleLowerCase("tr").localeCompare(word2.getName().toLocaleLowerCase("tr"), "tr") :
                     word1.getName().localeCompare(word2.getName(), "en")));
+            this.wordMap = new Map();
             let wordList = corpus.getWordList();
             for (let word of wordList) {
                 this.vocabulary.push(new VocabularyWord_1.VocabularyWord(word, corpus.getCount(new Word_1.Word(word))));
             }
-            this.vocabulary.sort(this.wordComparator(WordComparator_1.WordComparator.ENGLISH));
+            this.vocabulary.sort((a, b) => a.getCount() < b.getCount() ? 1 : a.getCount() > b.getCount() ? -1 : 0);
             this.createUniGramTable();
             this.constructHuffmanTree();
-            this.vocabulary.sort(this.wordComparator(WordComparator_1.WordComparator.TURKISH));
+            this.vocabulary.sort(this.wordComparator(WordComparator_1.WordComparator.ENGLISH));
+            for (let i = 0; i < this.vocabulary.length; i++) {
+                this.wordMap.set(this.vocabulary[i].getName(), i);
+            }
         }
         /**
          * Returns number of words in the vocabulary.
@@ -43,30 +47,13 @@
         size() {
             return this.vocabulary.length;
         }
-        binarySearch(word) {
-            let lo = 0;
-            let hi = this.vocabulary.length - 1;
-            while (lo <= hi) {
-                let mid = Math.floor((lo + hi) / 2);
-                if (this.vocabulary[mid].getName() == word.getName()) {
-                    return mid;
-                }
-                if (this.wordComparator(WordComparator_1.WordComparator.TURKISH)(this.vocabulary[mid], word) <= 0) {
-                    lo = mid + 1;
-                }
-                else {
-                    hi = mid - 1;
-                }
-            }
-            return -lo;
-        }
         /**
          * Searches a word and returns the position of that word in the vocabulary. Search is done using binary search.
          * @param word Word to be searched.
          * @return Position of the word searched.
          */
         getPosition(word) {
-            return this.binarySearch(word);
+            return this.wordMap.get(word.getName());
         }
         /**
          * Returns the word at a given index.

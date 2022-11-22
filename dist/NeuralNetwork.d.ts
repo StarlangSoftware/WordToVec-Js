@@ -18,6 +18,7 @@ export declare class NeuralNetwork {
      * @param parameter Parameters of the Word2Vec algorithm.
      */
     constructor(corpus: Corpus, parameter: WordToVecParameter);
+    vocabularySize(): number;
     /**
      * Constructs the fast exponentiation table. Instead of taking exponent at each time, the algorithm will lookup
      * the table.

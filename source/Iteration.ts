@@ -93,7 +93,6 @@ export class Iteration {
                 this.wordCount = 0;
                 this.lastWordCount = 0;
                 this.sentenceIndex = 0;
-                this.corpus.shuffleSentences(1);
             }
             return this.corpus.getSentence(this.sentenceIndex);
         }

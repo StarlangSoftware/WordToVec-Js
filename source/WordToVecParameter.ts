@@ -6,7 +6,7 @@ export class WordToVecParameter {
     private window : number = 5;
     private hierarchicalSoftMax : boolean = false;
     private negativeSamplingSize : number = 5;
-    private numberOfIterations : number = 3;
+    private numberOfIterations : number = 2;
     private seed : number = 1;
 
     /**

@@ -21,7 +21,7 @@
             this.window = 5;
             this.hierarchicalSoftMax = false;
             this.negativeSamplingSize = 5;
-            this.numberOfIterations = 3;
+            this.numberOfIterations = 2;
             this.seed = 1;
         }
         /**

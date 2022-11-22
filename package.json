@@ -26,7 +26,7 @@
   "dependencies": {
     "nlptoolkit-corpus": "^1.0.9",
     "nlptoolkit-datastructure": "^1.0.4",
-    "nlptoolkit-dictionary": "^1.0.9",
+    "nlptoolkit-dictionary": "^1.0.10",
     "nlptoolkit-math": "^1.0.2"
   }
 }

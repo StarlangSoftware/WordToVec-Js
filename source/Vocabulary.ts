@@ -7,6 +7,7 @@ export class Vocabulary {
 
     private vocabulary: Array<VocabularyWord> = new Array<VocabularyWord>()
     private table: Array<number> = new Array<number>()
+    private wordMap: Map<string, number>
 
     wordComparator = (comparator: WordComparator) =>
         (word1: Word, word2: Word) => (comparator == WordComparator.TURKISH ?
@@ -22,14 +23,18 @@ export class Vocabulary {
      * @param corpus Corpus used to train word vectors using Word2Vec algorithm.
      */
     constructor(corpus: Corpus) {
+        this.wordMap = new Map<string, number>()
         let wordList = corpus.getWordList();
         for (let word of wordList){
             this.vocabulary.push(new VocabularyWord(word, corpus.getCount(new Word(word))));
         }
-        this.vocabulary.sort(this.wordComparator(WordComparator.ENGLISH))
+        this.vocabulary.sort((a: VocabularyWord, b: VocabularyWord) => a.getCount() < b.getCount() ? 1 : a.getCount() > b.getCount() ? -1: 0)
         this.createUniGramTable();
         this.constructHuffmanTree();
-        this.vocabulary.sort(this.wordComparator(WordComparator.TURKISH))
+        this.vocabulary.sort(this.wordComparator(WordComparator.ENGLISH))
+        for (let i = 0; i < this.vocabulary.length; i++){
+            this.wordMap.set(this.vocabulary[i].getName(), i)
+        }
     }
 
     /**
@@ -40,30 +45,13 @@ export class Vocabulary {
         return this.vocabulary.length
     }
 
-    binarySearch(word: Word): number{
-        let lo = 0
-        let hi = this.vocabulary.length - 1
-        while (lo <= hi){
-            let mid = Math.floor((lo + hi) / 2)
-            if (this.vocabulary[mid].getName() == word.getName()){
-                return mid
-            }
-            if (this.wordComparator(WordComparator.TURKISH)(this.vocabulary[mid], word) <= 0) {
-                lo = mid + 1
-            } else {
-                hi = mid - 1
-            }
-        }
-        return -lo
-    }
-
     /**
      * Searches a word and returns the position of that word in the vocabulary. Search is done using binary search.
      * @param word Word to be searched.
      * @return Position of the word searched.
      */
     getPosition(word: Word): number{
-        return this.binarySearch(word)
+        return this.wordMap.get(word.getName())
     }
 
     /**

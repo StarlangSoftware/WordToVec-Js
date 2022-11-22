@@ -5,6 +5,7 @@ import { WordComparator } from "nlptoolkit-dictionary/dist/Dictionary/WordCompar
 export declare class Vocabulary {
     private vocabulary;
     private table;
+    private wordMap;
     wordComparator: (comparator: WordComparator) => (word1: Word, word2: Word) => number;
     /**
      * Constructor for the {@link Vocabulary} class. For each distinct word in the corpus, a {@link VocabularyWord}
@@ -18,7 +19,6 @@ export declare class Vocabulary {
      * @return Number of words in the vocabulary.
      */
     size(): number;
-    binarySearch(word: Word): number;
     /**
      * Searches a word and returns the position of that word in the vocabulary. Search is done using binary search.
      * @param word Word to be searched.

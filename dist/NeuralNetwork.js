@@ -34,6 +34,9 @@
             this.wordVectorUpdate = new Matrix_1.Matrix(this.vocabulary.size(), parameter.getLayerSize());
             this.prepareExpTable();
         }
+        vocabularySize() {
+            return this.vocabulary.size();
+        }
         /**
          * Constructs the fast exponentiation table. Instead of taking exponent at each time, the algorithm will lookup
          * the table.
@@ -91,10 +94,10 @@
             let currentSentence = this.corpus.getSentence(iteration.getSentenceIndex());
             let outputs = new Vector_1.Vector(this.parameter.getLayerSize(), 0);
             let outputUpdate = new Vector_1.Vector(this.parameter.getLayerSize(), 0);
-            this.corpus.shuffleSentences(this.parameter.getSeed());
             while (iteration.getIterationCount() < this.parameter.getNumberOfIterations()) {
                 iteration.alphaUpdate();
-                let wordIndex = this.vocabulary.getPosition(currentSentence.getWord(iteration.getSentencePosition()));
+                let word = currentSentence.getWord(iteration.getSentencePosition());
+                let wordIndex = this.vocabulary.getPosition(word);
                 let currentWord = this.vocabulary.getWord(wordIndex);
                 outputs.clear();
                 outputUpdate.clear();
@@ -165,21 +168,18 @@
         trainSkipGram() {
             let iteration = new Iteration_1.Iteration(this.corpus, this.parameter);
             let currentSentence = this.corpus.getSentence(iteration.getSentenceIndex());
-            let outputs = new Vector_1.Vector(this.parameter.getLayerSize(), 0);
             let outputUpdate = new Vector_1.Vector(this.parameter.getLayerSize(), 0);
-            this.corpus.shuffleSentences(this.parameter.getSeed());
             while (iteration.getIterationCount() < this.parameter.getNumberOfIterations()) {
                 iteration.alphaUpdate();
-                let wordIndex = this.vocabulary.getPosition(currentSentence.getWord(iteration.getSentencePosition()));
+                let word = currentSentence.getWord(iteration.getSentencePosition());
+                let wordIndex = this.vocabulary.getPosition(word);
                 let currentWord = this.vocabulary.getWord(wordIndex);
-                outputs.clear();
                 outputUpdate.clear();
                 let b = Math.floor(Math.random() * this.parameter.getWindow());
                 for (let a = b; a < this.parameter.getWindow() * 2 + 1 - b; a++) {
                     let c = iteration.getSentencePosition() - this.parameter.getWindow() + a;
                     if (a != this.parameter.getWindow() && currentSentence.safeIndex(c)) {
-                        let lastWordIndex = this.vocabulary.getPosition(currentSentence.getWord(c));
-                        let l1 = lastWordIndex;
+                        let l1 = this.vocabulary.getPosition(currentSentence.getWord(c));
                         outputUpdate.clear();
                         if (this.parameter.isHierarchicalSoftMax()) {
                             for (let d = 0; d < currentWord.getCodeLength(); d++) {
