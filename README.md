@@ -17,7 +17,7 @@ Video Lectures
 For Developers
 ============
 
-You can also see [Python](https://github.com/starlangsoftware/WordToVec-Py), [Java](https://github.com/starlangsoftware/WordToVec), 
+You can also see [Python](https://github.com/starlangsoftware/WordToVec-Py), [Java](https://github.com/starlangsoftware/WordToVec), [C](https://github.com/starlangsoftware/WordToVec-C),
 [C++](https://github.com/starlangsoftware/WordToVec-CPP), [Swift](https://github.com/starlangsoftware/WordToVec-Swift), 
 [Cython](https://github.com/starlangsoftware/WordToVec-Cy) or [C#](https://github.com/starlangsoftware/WordToVec-CS) repository.
 
