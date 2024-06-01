@@ -14,6 +14,10 @@
     const fs = require("fs");
     const VectorizedWord_1 = require("nlptoolkit-dictionary/dist/Dictionary/VectorizedWord");
     class SemanticDataSet {
+        /**
+         * Constructor for the semantic dataset. Reads word pairs and their similarity scores from an input file.
+         * @param fileName Input file that stores the word pair and similarity scores.
+         */
         constructor(fileName = undefined) {
             this.pairs = new Array();
             if (fileName != undefined) {
@@ -25,6 +29,12 @@
                 }
             }
         }
+        /**
+         * Calculates the similarities between words in the dataset. The word vectors will be taken from the input
+         * vectorized dictionary.
+         * @param dictionary Vectorized dictionary that stores the word vectors.
+         * @return Word pairs and their calculated similarities stored as a semantic dataset.
+         */
         calculateSimilarities(dictionary) {
             let result = new SemanticDataSet();
             for (let i = 0; i < this.pairs.length; i++) {
@@ -44,12 +54,25 @@
             }
             return result;
         }
+        /**
+         * Returns the size of the semantic dataset.
+         * @return The size of the semantic dataset.
+         */
         size() {
             return this.pairs.length;
         }
+        /**
+         * Sorts the word pairs in the dataset according to the WordPairComparator.
+         */
         sort() {
             this.pairs.sort((a, b) => a.getRelatedBy() < b.getRelatedBy() ? 1 : a.getRelatedBy() > b.getRelatedBy() ? -1 : 0);
         }
+        /**
+         * Finds and returns the index of a word pair in the pairs array list. If there is no such word pair, it
+         * returns -1.
+         * @param wordPair Word pair to search in the semantic dataset.
+         * @return Index of the given word pair in the pairs array list. If it does not exist, the method returns -1.
+         */
         index(wordPair) {
             for (let i = 0; i < this.pairs.length; i++) {
                 if (wordPair.equals(this.pairs[i])) {
@@ -58,6 +81,11 @@
             }
             return -1;
         }
+        /**
+         * Calculates the Spearman correlation coefficient with this dataset to the given semantic dataset.
+         * @param semanticDataSet Given semantic dataset with which Spearman correlation coefficient is calculated.
+         * @return Spearman correlation coefficient with the given semantic dataset.
+         */
         spearmanCorrelation(semanticDataSet) {
             let sum = 0;
             this.sort();
