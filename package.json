@@ -1,9 +1,9 @@
 {
   "name": "nlptoolkit-wordtovec",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "WordToVec Library",
-  "main": "index.js",
-  "types": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "Mocha"
   },
@@ -24,9 +24,9 @@
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "nlptoolkit-corpus": "^1.0.9",
-    "nlptoolkit-datastructure": "^1.0.4",
-    "nlptoolkit-dictionary": "^1.0.10",
-    "nlptoolkit-math": "^1.0.2"
+    "nlptoolkit-corpus": "^1.0.11",
+    "nlptoolkit-datastructure": "^1.0.8",
+    "nlptoolkit-dictionary": "^1.0.13",
+    "nlptoolkit-math": "^1.0.5"
   }
 }

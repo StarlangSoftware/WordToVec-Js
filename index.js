@@ -1,5 +1,0 @@
-export * from "./dist/Iteration"
-export * from "./dist/NeuralNetwork"
-export * from "./dist/Vocabulary"
-export * from "./dist/VocabularyWord"
-export * from "./dist/WordToVecParameter"

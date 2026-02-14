@@ -150,8 +150,9 @@
                     i++;
                     d1 += Math.pow(this.vocabulary[i].getCount(), 0.75) / total;
                 }
-                if (i >= this.vocabulary.length)
+                if (i >= this.vocabulary.length) {
                     i = this.vocabulary.length - 1;
+                }
             }
         }
         /**
